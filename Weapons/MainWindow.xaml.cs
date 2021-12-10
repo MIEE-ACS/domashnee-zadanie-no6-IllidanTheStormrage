@@ -236,14 +236,18 @@ namespace Weapons
         static void Resize(ref Weapon[] array, int newSize)
         {
             Weapon[] newArray = new Weapon[newSize];
-            for (int i = 0; i < newSize-1; i++)
+            for (int i = 0; i < newSize - 1; i++)
             {
                 newArray[i] = array[i];
             }
             array = newArray;
         }
 
-        Weapon[] Weapons = new Weapon[0];
+        int number = 0;
+
+        Weapon[] Weapons = new Weapon[2];
+
+        string[] separatingStrings = { " ", ";", "; " };
 
         List<string> ColdWeaponType = new List<string> { "Метательное", "Колюще-режущее", "Ударно-дробящее" };
         List<string> FireArmWeaponType = new List<string> { "Пистолет", "Винтовка", "Дробовик" , "Пулемёт", "Пистолет-пулемёт"};
@@ -427,9 +431,14 @@ namespace Weapons
                 T += "и нажмите ДОБАВИТЬ.";
                 TB_One.Text += T;
                 B_Add.Content = "Добавить";
+                check = 1;
             }
             else if (check == 1)
             {
+                //Array.Resize(ref Weapons, number + 1);
+
+                string[] inputdata = TB_One.Text.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+
                 switch (CB_1.SelectedIndex)
                 {
                     case 0: //холодное
@@ -438,39 +447,39 @@ namespace Weapons
                             case 0: //метательное
                                 switch (CB_3.SelectedIndex)
                                 {
-                                    case 0: //лук
-                                        T += AS + SZ + M + BR + SPM + RS + MAG + DMG;
+                                    case 0: //лук T += AS + SZ + M + BR + SPM + RS + MAG + DMG;
+                                        Weapons[number] = new Bow(double.Parse(inputdata[0]), double.Parse(inputdata[1]),inputdata[2], double.Parse(inputdata[3]), double.Parse(inputdata[4]), double.Parse(inputdata[5]),int.Parse(inputdata[6]),double.Parse(inputdata[7]));
                                         break;
-                                    case 1: //арбалет
-                                        T += BS + SZ + M + BR + SPM + RS + MAG + DMG;
+                                    case 1: //арбалет T += BS + SZ + M + BR + SPM + RS + MAG + DMG;
+
                                         break;
-                                    case 2: //метательный нож
-                                        T += W + SZ + M + BR + SPM + RS + MAG + DMG;
+                                    case 2: //метательный нож T += W + SZ + M + BR + SPM + RS + MAG + DMG;
+
                                         break;
                                 }
                                 break;
                             case 1: //режущее
                                 switch (CB_3.SelectedIndex)
                                 {
-                                    case 0: //нож
-                                        T += SZ + M + BR + SPM + RS + DMG;
+                                    case 0: //нож T += SZ + M + BR + SPM + RS + DMG;
+
                                         break;
-                                    case 1: //меч
-                                        T += W + SZ + M + BR + SPM + RS + DMG;
+                                    case 1: //меч T += W + SZ + M + BR + SPM + RS + DMG;
+
                                         break;
-                                    case 2: //топор
-                                        T += SZ + M + BR + SPM + RS + DMG;
+                                    case 2: //топор T += SZ + M + BR + SPM + RS + DMG;
+
                                         break;
                                 }
                                 break;
                             case 2: //дробящее
                                 switch (CB_3.SelectedIndex)
                                 {
-                                    case 0: //дубинка
-                                        T += SZ + M + BR + SPM + RS + DMG;
+                                    case 0: //дубинка T += SZ + M + BR + SPM + RS + DMG;
+
                                         break;
-                                    case 1: //камень
-                                        T += C + SZ + M + BR + SPM + RS + DMG;
+                                    case 1: //камень T += C + SZ + M + BR + SPM + RS + DMG;
+
                                         break;
                                 }
                                 break;
@@ -479,33 +488,33 @@ namespace Weapons
                     case 1: //огнестрельное
                         switch (CB_2.SelectedIndex)
                         {
-                            case 0: //пистолет
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                            case 0: //пистолет T += R + M + BR + SPM + RS + MAG + DMG;
+
                                 break;
                             case 1: //винтовка
                                 switch (CB_3.SelectedIndex)
                                 {
-                                    case 0: //штурмовая
-                                        T += R + M + BR + SPM + RS + MAG + DMG;
+                                    case 0: //штурмовая T += R + M + BR + SPM + RS + MAG + DMG;
+
                                         break;
-                                    case 1: //снайперская
-                                        T += CS + R + M + BR + SPM + RS + MAG + DMG;
+                                    case 1: //снайперская T += CS + R + M + BR + SPM + RS + MAG + DMG;
+
                                         break;
                                 }
                                 break;
-                            case 2: //дробовик
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                            case 2: //дробовик T += R + M + BR + SPM + RS + MAG + DMG;
+
                                 break;
-                            case 3: //пулемёт
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                            case 3: //пулемёт T += R + M + BR + SPM + RS + MAG + DMG;
+
                                 break;
-                            case 4: //пп
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                            case 4: //пп T += R + M + BR + SPM + RS + MAG + DMG;
+
                                 break;
                         }
                         break;
-                    case 2: //ядерное - ракета
-                        T += P + M + BR + SPM + RS + DMG;
+                    case 2: //ядерное - ракета T += P + M + BR + SPM + RS + DMG;
+
                         break;
                 }
             }
