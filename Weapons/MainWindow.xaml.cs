@@ -24,6 +24,29 @@ namespace Weapons
         public int Magazine { get; set; } //ёмкость "магазина"
         public double Damage { get; set; } //урон
 
+        public void Check()
+        {
+            if (BlastRadius < 0)
+            {
+                MessageBox.Show("Вы ввели отрицательно число, но ничего - я исправлю)");
+                BlastRadius = Math.Abs(BlastRadius);
+            }
+            if (ShotsPerMinute < 0)
+            {
+                MessageBox.Show("Вы ввели отрицательно число, но ничего - я исправлю)");
+                BlastRadius = Math.Abs(BlastRadius);
+            }
+            if (RechargeSpeed < 0)
+            {
+                MessageBox.Show("Вы ввели отрицательно число, но ничего - я исправлю)");
+                BlastRadius = Math.Abs(BlastRadius);
+            }
+            if (Damage < 0)
+            {
+                MessageBox.Show("Вы ввели отрицательно число, но ничего - я исправлю)");
+                BlastRadius = Math.Abs(BlastRadius);
+            }
+        }
         public Weapon (String N, double BR, double SPM, double RS, int M, double D)
         {
             Model = N;
@@ -39,16 +62,16 @@ namespace Weapons
             return "Модель "+ Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут и средний урон " + Damage + " единиц урона.";
         }
 
-        public bool ParaEquals(object obj) //Equals, но для характеристик
+        public bool ParaEquals(object obj1) //Equals, но для характеристик
         {
-            Weapon w = (Weapon)obj;
-            return (w.BlastRadius == BlastRadius) && (w.ShotsPerMinute == ShotsPerMinute) && (w.RechargeSpeed == RechargeSpeed) && (w.Magazine == Magazine) && (w.Damage == Damage);
+            Weapon w = (Weapon)obj1;
+            return ((w.BlastRadius == BlastRadius) && (w.ShotsPerMinute == ShotsPerMinute) && (w.RechargeSpeed == RechargeSpeed) && (w.Magazine == Magazine) && (w.Damage == Damage));
         }
 
-        public override bool Equals(object obj)
+        public bool TrueEquals(object obj2) //нелогично называть его просто Equals, так что назвал его TrueEquals и не стал переопределять оригинальный - в этом нет смысла
         {
-            Weapon w = (Weapon)obj;
-            return (w.Model == Model) && (w.BlastRadius == BlastRadius) && (w.ShotsPerMinute == ShotsPerMinute) && (w.RechargeSpeed == RechargeSpeed) && (w.Magazine == Magazine) && (w.Damage == Damage);
+            Weapon w = (Weapon)obj2;
+            return ((w.Model == Model) && (w.BlastRadius == BlastRadius) && (w.ShotsPerMinute == ShotsPerMinute) && (w.RechargeSpeed == RechargeSpeed) && (w.Magazine == Magazine) && (w.Damage == Damage));
         }
     }
 
@@ -60,6 +83,11 @@ namespace Weapons
             : base (N,BR,SPM,RS,M,D)
         {
             Size = S;
+        }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона и размер " + Size + " метров.";
         }
     }
 
@@ -79,6 +107,11 @@ namespace Weapons
         {
             ArrowSize = AS;
         }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и длину стрелы, равную " + ArrowSize + " метров.";
+        }
     }
 
     public class CrossBow : Projectile //арбалет
@@ -89,6 +122,11 @@ namespace Weapons
         {
             BoltSize = BS;
         }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и длину болта, равную " + BoltSize + " метров.";
+        }
     }
 
     public class ThrowingKnife : Projectile //метательный нож
@@ -98,6 +136,11 @@ namespace Weapons
             : base (N, BR, SPM, RS, M, D, S)
         {
             Weight = W;
+        }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и вес " + Weight + " килограммов.";
         }
     }
     abstract public class Cutting : Cold //режущее
@@ -123,6 +166,11 @@ namespace Weapons
             : base (N, BR, SPM, RS, D, S)
         {
             Weight = W;
+        }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и вес " + Weight + " килограммов.";
         }
     }
 
@@ -158,6 +206,11 @@ namespace Weapons
         {
             Country = CNTR;
         }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и страну происхождения " + Country + ".";
+        }
     }
 
     abstract public class FireArm : Weapon //огнестрельное
@@ -168,6 +221,11 @@ namespace Weapons
             : base (N, BR, SPM, RS, M, D)
         {
             Recoil = R;
+        }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона и отдачу " + Recoil + " джоулей.";
         }
     }
 
@@ -203,6 +261,11 @@ namespace Weapons
         {
             CS = cs;
         }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, отдачу " + Recoil + " джоулей и кратность прицела " + CS;
+        }
     }
 
     public class ShotGun : FireArm //дробовик
@@ -237,6 +300,11 @@ namespace Weapons
             : base (N, BR, SPM, RS, M, D)
         {
             Power = P;
+        }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона и мощность взрыва " + Power + " в тратиловом эквиваленте.";
         }
     }
 
@@ -280,7 +348,7 @@ namespace Weapons
         string SPM = "скорострельность, ";
         string RS = "скорость перезарядки, ";
         string MAG = "вместимость мазагина, ";
-        string MAGDM = "вместимость магазина (ни на что не полияет XD)";
+        string MAGDM = "вместимость магазина (ни на что не полияет XD), ";
         string DMG = "урон, ";
         string SZ = "максимальный размер, ";
         string AS = "размер стрелы, ";
@@ -660,6 +728,7 @@ namespace Weapons
                         Weapons.Add(new Rocket(Model, BlastRad, ShPeMi, ReSp, D, SorRorP));
                         break;
                 }
+                Weapons[number].Check();
                 CB_CH1.IsEnabled = true;
                 CB_CH2.IsEnabled = true;
                 CB_CH1.Items.Add((number + 1).ToString());
@@ -669,10 +738,11 @@ namespace Weapons
                 DG_OUT.Items.Refresh();
                 TB_One.Text = "Успешно!";
                 TB_One.IsReadOnly = true;
-                B_Add.Content = "Добавить";
+                B_Add.Content = "Введите характеристики";
                 TB_Remember.Text = "";
                 check = 0;
             }
+            return;
         }
 
         private void TB_One_GotFocus(object sender, RoutedEventArgs e)
@@ -682,6 +752,8 @@ namespace Weapons
                 TB_One.IsReadOnly = false;
                 TB_One.Text = "";
             }
+
+            return;
         }
 
         private void B_INFO_Click(object sender, RoutedEventArgs e)
@@ -693,6 +765,8 @@ namespace Weapons
             }
 
             TB_One.Text = Weapons[CB_CH1.SelectedIndex].ToString();
+
+            return;
         }
 
         private void B_EQUALS_Click(object sender, RoutedEventArgs e)
@@ -703,7 +777,7 @@ namespace Weapons
                 return;
             }
 
-            if (Weapons[CB_CH1.SelectedIndex].Equals(Weapons[CB_CH2.SelectedIndex]))
+            if (Weapons[CB_CH1.SelectedIndex].TrueEquals(Weapons[CB_CH2.SelectedIndex]))
             {
                 TB_One.Text = "Это две абсолютно одинаковые единицы оружия!";
             }
@@ -715,6 +789,8 @@ namespace Weapons
             {
                 TB_One.Text = "Это две совершенно разные единицы оружия!";
             }
+
+            return;
         }
     }
 }
