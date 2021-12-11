@@ -42,6 +42,7 @@
         <Button x:Name="B_INFO" Content="Инфо" Grid.ColumnSpan="2" Grid.Column="2" Margin="10,10,14,12" Grid.Row="4" Click="B_INFO_Click"/>
         <Button x:Name="B_EQUALS" Content="Сравнить с:" Grid.Column="4" Margin="2,10,10,12" Grid.Row="4" Click="B_EQUALS_Click"/>
         <ComboBox x:Name="CB_CH2" Grid.Column="5" Margin="9,10,16,12" Grid.Row="4"  VerticalContentAlignment ="Center" IsEnabled="False"/>
+        <Button x:Name="B_Clear" Content="Очистка списка" Grid.Column="6" Grid.Row="4" Margin="10,10,10,10" Click="B_Clear_Click" BorderBrush="Red" Background="#FFFFBCBC"/>
 
     </Grid>
 </Window>

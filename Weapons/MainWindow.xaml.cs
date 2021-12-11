@@ -330,8 +330,6 @@ namespace Weapons
 
         int number = 0;
 
-        //Weapon[] Weapons = new Weapon[2];
-
         List<Weapon> Weapons = new List<Weapon>();
 
         List<string> ColdWeaponType = new List<string> { "Метательное", "Колюще-режущее", "Ударно-дробящее" };
@@ -538,8 +536,6 @@ namespace Weapons
                 //Array.Resize(ref Weapons, number + 1);
 
                 string[] separatingStrings = {" ", ";", "; "};
-
-                //string[] inputdata = TB_One.Text.Split(" ");
 
                 try
                 {
@@ -752,7 +748,6 @@ namespace Weapons
                 TB_One.IsReadOnly = false;
                 TB_One.Text = "";
             }
-
             return;
         }
 
@@ -763,9 +758,7 @@ namespace Weapons
                 MessageBox.Show("Выберите оружие!");
                 return;
             }
-
             TB_One.Text = Weapons[CB_CH1.SelectedIndex].ToString();
-
             return;
         }
 
@@ -789,6 +782,17 @@ namespace Weapons
             {
                 TB_One.Text = "Это две совершенно разные единицы оружия!";
             }
+            return;
+        }
+
+        private void B_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            CB_CH1.Items.Clear();
+            CB_CH1.IsEnabled = false;
+            CB_CH2.Items.Clear();
+            CB_CH2.IsEnabled = false;
+            Weapons.Clear();
+            DG_OUT.Items.Clear();
 
             return;
         }
