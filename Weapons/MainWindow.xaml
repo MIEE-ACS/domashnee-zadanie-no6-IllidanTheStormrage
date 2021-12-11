@@ -5,17 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Weapons"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Склад оружия (1С предприятия, АХАХАХА)" Height="450" Width="800">
     <Grid>
-        <ComboBox x:Name="CB_1" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CB_1_SelectionChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="104*"/>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="51*"/>
+            <RowDefinition Height="95*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="126*"/>
+            <ColumnDefinition Width="85*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="90*"/>
+            <ColumnDefinition Width="94*"/>
+            <ColumnDefinition Width="123*"/>
+            <ColumnDefinition Width="192*"/>
+        </Grid.ColumnDefinitions>
+        <ComboBox x:Name="CB_1" Margin="10,9,9,12" SelectionChanged="CB_1_SelectionChanged" Grid.Row="1" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center">
             <ComboBoxItem Content="Холодное"/>
             <ComboBoxItem Content="Огнестрельное"/>
             <ComboBoxItem Content="Ядерное"/>
         </ComboBox>
-        <ComboBox x:Name="CB_2" HorizontalAlignment="Left" Margin="146,81,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CB_2_SelectionChanged"/>
-        <ComboBox x:Name="CB_3" HorizontalAlignment="Left" Margin="280,81,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="B_Add" Content="Button" HorizontalAlignment="Left" Margin="417,81,0,0" VerticalAlignment="Top" Width="131" Height="22" Click="B_Add_Click"/>
-        <TextBox x:Name="TB_One" HorizontalAlignment="Left" Margin="10,124,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="538" Height="141"/>
+        <ComboBox x:Name="CB_2" Margin="9,9,8,12" SelectionChanged="CB_2_SelectionChanged" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center" Grid.ColumnSpan="2"/>
+        <ComboBox x:Name="CB_3" Margin="6,9,5,12" Grid.Column="3" Grid.Row="1" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center" Grid.ColumnSpan="2"/>
+        <Button x:Name="B_Add" Content="Кнопка" Margin="10,9,13,12" Click="B_Add_Click" Grid.Column="5" Grid.Row="1" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="TB_One" Margin="10,9,13,2" TextWrapping="Wrap" Text="Ввод и вывод информации осуществляется здесь." GotFocus="TB_One_GotFocus" Grid.ColumnSpan="7" Grid.Row="2" IsReadOnly="True"/>
+        <DataGrid x:Name="DG_OUT" Margin="10,9,10,10" Grid.Column="7" Grid.RowSpan="5" Grid.Row="1"/>
+        <TextBlock x:Name="TB_Remember" Margin="10,3,13,4" TextWrapping="Wrap" Grid.Row="3" Grid.ColumnSpan="7"/>
+        <Label Content="Комната самого тихого в группе" Grid.ColumnSpan="8" Margin="10,10,10,10" FontSize="20" FontWeight="Bold" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center"/>
+        <Label Content="Оружие №:" Margin="3,10,3,12" Grid.Row="4" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center"/>
+        <ComboBox x:Name="CB_CH1" Grid.Column="1" Margin="10,10,6,12" Grid.Row="4" VerticalContentAlignment ="Center" IsEnabled="False"/>
+        <Button x:Name="B_INFO" Content="Инфо" Grid.ColumnSpan="2" Grid.Column="2" Margin="10,10,14,12" Grid.Row="4" Click="B_INFO_Click"/>
+        <Button x:Name="B_EQUALS" Content="Сравнить с:" Grid.Column="4" Margin="2,10,10,12" Grid.Row="4" Click="B_EQUALS_Click"/>
+        <ComboBox x:Name="CB_CH2" Grid.Column="5" Margin="9,10,16,12" Grid.Row="4"  VerticalContentAlignment ="Center" IsEnabled="False"/>
 
     </Grid>
 </Window>

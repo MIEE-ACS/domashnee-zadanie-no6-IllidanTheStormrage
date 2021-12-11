@@ -33,13 +33,30 @@ namespace Weapons
             Magazine = M;
             Damage = D;
         }
+
+        public override string ToString()
+        {
+            return "Модель "+ Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут и средний урон " + Damage + " единиц урона.";
+        }
+
+        public bool ParaEquals(object obj) //Equals, но для характеристик
+        {
+            Weapon w = (Weapon)obj;
+            return (w.BlastRadius == BlastRadius) && (w.ShotsPerMinute == ShotsPerMinute) && (w.RechargeSpeed == RechargeSpeed) && (w.Magazine == Magazine) && (w.Damage == Damage);
+        }
+
+        public override bool Equals(object obj)
+        {
+            Weapon w = (Weapon)obj;
+            return (w.Model == Model) && (w.BlastRadius == BlastRadius) && (w.ShotsPerMinute == ShotsPerMinute) && (w.RechargeSpeed == RechargeSpeed) && (w.Magazine == Magazine) && (w.Damage == Damage);
+        }
     }
 
     abstract public class Cold : Weapon //абстрактный холодное
     {
         public double Size { get; set; } //максимальный размер
 
-        public Cold (double S, String N, double BR, double SPM, double RS, int M, double D) 
+        public Cold (String N, double BR, double SPM, double RS, int M, double D, double S) 
             : base (N,BR,SPM,RS,M,D)
         {
             Size = S;
@@ -48,8 +65,8 @@ namespace Weapons
 
     abstract public class Projectile : Cold //метательное
     {
-        public Projectile (double S, String N, double BR, double SPM, double RS, int M, double D) 
-            : base (S, N, BR, SPM, RS, M, D)
+        public Projectile (String N, double BR, double SPM, double RS, int M, double D, double S) 
+            : base (N, BR, SPM, RS, M, D, S)
         {
         }
     }
@@ -57,8 +74,8 @@ namespace Weapons
     public class Bow : Projectile //лук
     {
         public double ArrowSize; //размер стрелы
-        public Bow (double AS, double S, String N, double BR, double SPM, double RS, int M, double D) 
-            : base (S, N, BR, SPM, RS, M, D)
+        public Bow (String N, double BR, double SPM, double RS, int M, double D, double S, double AS) 
+            : base (N, BR, SPM, RS, M, D, S)
         {
             ArrowSize = AS;
         }
@@ -67,8 +84,8 @@ namespace Weapons
     public class CrossBow : Projectile //арбалет
     {
         public double BoltSize; //размер болта
-        public CrossBow (double BS, double S, String N, double BR, double SPM, double RS, int M, double D)
-            : base (S, N, BR, SPM, RS, M, D)
+        public CrossBow (String N, double BR, double SPM, double RS, int M, double D, double S, double BS)
+            : base (N, BR, SPM, RS, M, D, S)
         {
             BoltSize = BS;
         }
@@ -77,24 +94,24 @@ namespace Weapons
     public class ThrowingKnife : Projectile //метательный нож
     {
         public double Weight; //вес
-        public ThrowingKnife (double W, double S, String N, double BR, double SPM, double RS, int M, double D)
-            : base (S, N, BR, SPM, RS, M, D)
+        public ThrowingKnife (String N, double BR, double SPM, double RS, int M, double D, double S, double W)
+            : base (N, BR, SPM, RS, M, D, S)
         {
             Weight = W;
         }
     }
     abstract public class Cutting : Cold //режущее
     {
-        public Cutting (double S, String N, double BR, double SPM, double RS, double D)
-            : base (S, N, BR, SPM, RS, 1, D)
+        public Cutting (String N, double BR, double SPM, double RS, double D, double S)
+            : base (N, BR, SPM, RS, 1, D, S)
         {
         }
     }
 
     public class Knife : Cutting //нож
     {
-        public Knife (double S, String N, double BR, double SPM, double RS, double D)
-            :base (S, N, BR, SPM, RS, D)
+        public Knife (String N, double BR, double SPM, double RS, double D, double S)
+            :base (N, BR, SPM, RS, D, S)
         {
         }
     }
@@ -102,8 +119,8 @@ namespace Weapons
     public class Sword : Cutting //меч
     {
         public double Weight; //вес
-        public Sword (double W, double S, String N, double BR, double SPM, double RS, double D)
-            : base (S, N, BR, SPM, RS, D)
+        public Sword (String N, double BR, double SPM, double RS, double D, double S, double W)
+            : base (N, BR, SPM, RS, D, S)
         {
             Weight = W;
         }
@@ -111,24 +128,24 @@ namespace Weapons
 
     public class BattleAxe : Cutting //топор
     {
-        public BattleAxe (double S, String N, double BR, double SPM, double RS, double D)
-            : base (S, N, BR, SPM, RS, D)
+        public BattleAxe (String N, double BR, double SPM, double RS, double D, double S)
+            : base (N, BR, SPM, RS, D, S)
         {
         }
     }
 
     abstract public class Strike : Cold //ударно-дробящее
     {
-        public Strike (double S, String N, double BR, double SPM, double RS, double D)
-            : base (S, N, BR, SPM, RS, 1, D)
+        public Strike (String N, double BR, double SPM, double RS, double D, double S)
+            : base (N, BR, SPM, RS, 1, D, S)
         {
         }
     }
 
     public class Baton : Strike //дубинка
     {
-        public Baton (double S, String N, double BR, double SPM, double RS, double D)
-            : base (S, N, BR, SPM, RS, D)
+        public Baton (String N, double BR, double SPM, double RS, double D, double S)
+            : base (N, BR, SPM, RS, D, S)
         {
         }
     }
@@ -136,8 +153,8 @@ namespace Weapons
     public class Rock : Strike //камень
     {
         public string Country; //страна происхождения
-        public Rock (string CNTR, double S, String N, double BR, double SPM, double RS, double D)
-        : base (S, N, BR, SPM, RS, D)
+        public Rock (String N, double BR, double SPM, double RS, double D, double S, string CNTR)
+        : base (N, BR, SPM, RS, D, S)
         {
             Country = CNTR;
         }
@@ -147,7 +164,7 @@ namespace Weapons
     {
         public double Recoil { get; set; } //отдача в джоулях
 
-        public FireArm (double R, String N, double BR, double SPM, double RS, int M, double D)
+        public FireArm (String N, double BR, double SPM, double RS, int M, double D, double R)
             : base (N, BR, SPM, RS, M, D)
         {
             Recoil = R;
@@ -156,24 +173,24 @@ namespace Weapons
 
     public class Pistol : FireArm //пистолет
     {
-        public Pistol (double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public Pistol (String N, double BR, double SPM, double RS, int M, double D, double R)
+            : base (N, BR, SPM, RS, M, D, R)
         {
         }
     }
 
     abstract public class Rifle : FireArm //абстрактный винтовка
     {
-        public Rifle (double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public Rifle (String N, double BR, double SPM, double RS, int M, double D, double R)
+            : base (N, BR, SPM, RS, M, D, R)
         {
         }
     }
 
     public class Assault : Rifle //штурмовая
     {
-        public Assault (double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public Assault (String N, double BR, double SPM, double RS, int M, double D, double R)
+            : base (N, BR, SPM, RS, M, D, R)
         {
         }
     }
@@ -181,8 +198,8 @@ namespace Weapons
     public class Sniper : Rifle //снайперская
     {
         int CS; //кратность прицела
-        public Sniper (int cs, double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public Sniper (String N, double BR, double SPM, double RS, int M, double D, double R, int cs)
+            : base (N, BR, SPM, RS, M, D, R)
         {
             CS = cs;
         }
@@ -190,24 +207,24 @@ namespace Weapons
 
     public class ShotGun : FireArm //дробовик
     {
-        public ShotGun (double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public ShotGun (String N, double BR, double SPM, double RS, int M, double D, double R)
+            : base (N, BR, SPM, RS, M, D, R)
         {
         }
     }
 
     public class MachineGun : FireArm //пулемёт
     {
-        public MachineGun (double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public MachineGun (String N, double BR, double SPM, double RS, int M, double D, double R)
+            : base (N, BR, SPM, RS, M, D, R)
         {
         }
     }
 
     public class SubMachine : FireArm //пистолет-пулемёт
     {
-        public SubMachine (double R, String N, double BR, double SPM, double RS, int M, double D)
-            : base (R, N, BR, SPM, RS, M, D)
+        public SubMachine (String N, double BR, double SPM, double RS, int M, double D, double R)
+            : base (N, BR, SPM, RS, M, D, R)
         {
         }
     }
@@ -216,7 +233,7 @@ namespace Weapons
     {
         public double Power { get; set; } //мощность в джоулях
 
-        public Nuclear (double P, String N, double BR, double SPM, double RS, int M, double D)
+        public Nuclear (String N, double BR, double SPM, double RS, int M, double D, double P)
             : base (N, BR, SPM, RS, M, D)
         {
             Power = P;
@@ -225,29 +242,29 @@ namespace Weapons
 
     public class Rocket : Nuclear
     {
-        public Rocket (double P, String N, double BR, double SPM, double RS, double D)
-            : base (P, N, BR, SPM, RS, 1, D)
+        public Rocket (String N, double BR, double SPM, double RS, double D, double P)
+            : base (N, BR, SPM, RS, 1, D, P)
         {
         }
     }
 
     public partial class MainWindow : Window
     {
-        static void Resize(ref Weapon[] array, int newSize)
-        {
-            Weapon[] newArray = new Weapon[newSize];
-            for (int i = 0; i < newSize - 1; i++)
-            {
-                newArray[i] = array[i];
-            }
-            array = newArray;
-        }
+        //static void Resize(ref Weapon[] array, int newSize)
+        //{
+        //    Weapon[] newArray = new Weapon[newSize];
+        //    for (int i = 0; i < newSize - 1; i++)
+        //    {
+        //        newArray[i] = array[i];
+        //    }
+        //    array = newArray;
+        //}
 
         int number = 0;
 
-        Weapon[] Weapons = new Weapon[2];
+        //Weapon[] Weapons = new Weapon[2];
 
-        string[] separatingStrings = { " ", ";", "; " };
+        List<Weapon> Weapons = new List<Weapon>();
 
         List<string> ColdWeaponType = new List<string> { "Метательное", "Колюще-режущее", "Ударно-дробящее" };
         List<string> FireArmWeaponType = new List<string> { "Пистолет", "Винтовка", "Дробовик" , "Пулемёт", "Пистолет-пулемёт"};
@@ -263,6 +280,7 @@ namespace Weapons
         string SPM = "скорострельность, ";
         string RS = "скорость перезарядки, ";
         string MAG = "вместимость мазагина, ";
+        string MAGDM = "вместимость магазина (ни на что не полияет XD)";
         string DMG = "урон, ";
         string SZ = "максимальный размер, ";
         string AS = "размер стрелы, ";
@@ -339,33 +357,39 @@ namespace Weapons
 
         private void B_Add_Click(object sender, RoutedEventArgs e)
         {
-            TB_One.Text = "";
-
             if (CB_1.SelectedIndex == -1 || CB_2.SelectedIndex == -1)
             {
-                TB_One.Text += "Выберите тип оружия!";
+                TB_One.Text = "Выберите тип оружия!";
                 return;
             }
+
             if (check == 0)
             {
+                TB_One.Text = "";
+
                 string T = "Введите: ";
 
                 switch (CB_1.SelectedIndex)
                 {
                     case 0: //холодное
-                        switch(CB_2.SelectedIndex)
+                        if (CB_3.SelectedIndex == -1)
+                        {
+                            TB_One.Text = "Выберите тип оружия!";
+                            return;
+                        }
+                        switch (CB_2.SelectedIndex)
                         {
                             case 0: //метательное
-                                switch(CB_3.SelectedIndex)
+                                switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //лук
-                                        T += AS + SZ + M + BR + SPM + RS + MAG + DMG;
+                                        T += M + BR + SPM + RS + MAG + DMG + SZ + AS;
                                         break;
                                     case 1: //арбалет
-                                        T += BS + SZ + M + BR + SPM + RS + MAG + DMG;
+                                        T += M + BR + SPM + RS + MAG + DMG + SZ + BS; ;
                                         break;
                                     case 2: //метательный нож
-                                        T += W + SZ + M + BR + SPM + RS + MAG + DMG;
+                                        T += M + BR + SPM + RS + MAG + DMG + SZ + W;
                                         break;
                                 }
                                 break;
@@ -373,13 +397,13 @@ namespace Weapons
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //нож
-                                        T += SZ + M + BR + SPM + RS + DMG;
+                                        T += M + BR + SPM + RS + MAGDM + DMG + SZ;
                                         break;
                                     case 1: //меч
-                                        T += W + SZ + M + BR + SPM + RS + DMG;
+                                        T += M + BR + SPM + RS + MAGDM + DMG + SZ + W;
                                         break;
                                     case 2: //топор
-                                        T += SZ + M + BR + SPM + RS + DMG;
+                                        T += M + BR + SPM + RS + MAGDM + DMG + SZ;
                                         break;
                                 }
                                 break;
@@ -387,49 +411,57 @@ namespace Weapons
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //дубинка
-                                        T += SZ + M + BR + SPM + RS + DMG;
+                                        T += M + BR + SPM + RS + MAGDM + DMG + SZ;
                                         break;
                                     case 1: //камень
-                                        T += C + SZ + M + BR + SPM + RS + DMG;
+                                        T += M + BR + SPM + RS + MAGDM + DMG + SZ + C;
                                         break;
                                 }
                                 break;
                         }
                         break;
                     case 1: //огнестрельное
-                        switch(CB_2.SelectedIndex)
+                        switch (CB_2.SelectedIndex)
                         {
                             case 0: //пистолет
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                                T += M + BR + SPM + RS + MAG + DMG + R;
                                 break;
                             case 1: //винтовка
+                                if (CB_3.SelectedIndex == -1)
+                                {
+                                    TB_One.Text = "Выберите тип оружия!";
+                                    return;
+                                }
+
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //штурмовая
-                                        T += R + M + BR + SPM + RS + MAG + DMG;
+                                        T += M + BR + SPM + RS + MAG + DMG + R;
                                         break;
                                     case 1: //снайперская
-                                        T += CS + R + M + BR + SPM + RS + MAG + DMG;
+                                        T += M + BR + SPM + RS + MAG + DMG + R + CS;
                                         break;
                                 }
                                 break;
                             case 2: //дробовик
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                                T += M + BR + SPM + RS + MAG + DMG + R;
                                 break;
                             case 3: //пулемёт
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                                T += M + BR + SPM + RS + MAG + DMG + R;
                                 break;
                             case 4: //пп
-                                T += R + M + BR + SPM + RS + MAG + DMG;
+                                T += M + BR + SPM + RS + MAG + DMG + R;
                                 break;
                         }
                         break;
                     case 2: //ядерное - ракета
-                        T += P + M + BR + SPM + RS + DMG;
+                        T += M + BR + SPM + RS + MAGDM + DMG + P;
                         break;
                 }
+
                 T += "и нажмите ДОБАВИТЬ.";
                 TB_One.Text += T;
+                TB_Remember.Text = "Напоминание! " + T;
                 B_Add.Content = "Добавить";
                 check = 1;
             }
@@ -437,24 +469,80 @@ namespace Weapons
             {
                 //Array.Resize(ref Weapons, number + 1);
 
+                string[] separatingStrings = {" ", ";", "; "};
+
+                //string[] inputdata = TB_One.Text.Split(" ");
+
+                try
+                {
+                    string[] inputdata1 = TB_One.Text.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+
+                    string Model1 = inputdata1[0];
+                    double BlastRad1 = double.Parse(inputdata1[1]);
+                    double ShPeMi1 = double.Parse(inputdata1[2]);
+                    double ReSp1 = double.Parse(inputdata1[3]);
+                    int MAG1 = int.Parse(inputdata1[4]);
+                    double D1 = double.Parse(inputdata1[5]);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Неверный формат данных!!!");
+                    return;
+                }
+                
                 string[] inputdata = TB_One.Text.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+
+                string Model = inputdata[0];
+                double BlastRad = double.Parse(inputdata[1]);
+                double ShPeMi = double.Parse(inputdata[2]);
+                double ReSp = double.Parse(inputdata[3]);
+                int MAG = int.Parse(inputdata[4]);
+                double D = double.Parse(inputdata[5]);
+                //////
+                double SorRorP;
+                /////
+                double AorBSorWorCNTRorCS;
+                string CNTR;
+                int CS;
 
                 switch (CB_1.SelectedIndex)
                 {
                     case 0: //холодное
+                        try
+                        {
+                            double strch = double.Parse(inputdata[6]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Неверный формат данных!!!");
+                            return;
+                        }
+
+                        SorRorP = double.Parse(inputdata[6]);
                         switch (CB_2.SelectedIndex)
                         {
                             case 0: //метательное
+                                try
+                                {
+                                    double strch = double.Parse(inputdata[7]);
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("Неверный формат данных!!!");
+                                    return;
+                                }
+
+                                AorBSorWorCNTRorCS = double.Parse(inputdata[7]);
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //лук T += AS + SZ + M + BR + SPM + RS + MAG + DMG;
-                                        Weapons[number] = new Bow(double.Parse(inputdata[0]), double.Parse(inputdata[1]),inputdata[2], double.Parse(inputdata[3]), double.Parse(inputdata[4]), double.Parse(inputdata[5]),int.Parse(inputdata[6]),double.Parse(inputdata[7]));
+                                        Weapons.Add(new Bow(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP, AorBSorWorCNTRorCS));
                                         break;
                                     case 1: //арбалет T += BS + SZ + M + BR + SPM + RS + MAG + DMG;
-
+                                        Weapons.Add(new CrossBow(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP, AorBSorWorCNTRorCS));
                                         break;
                                     case 2: //метательный нож T += W + SZ + M + BR + SPM + RS + MAG + DMG;
-
+                                        Weapons.Add(new ThrowingKnife(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP, AorBSorWorCNTRorCS));
                                         break;
                                 }
                                 break;
@@ -462,13 +550,24 @@ namespace Weapons
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //нож T += SZ + M + BR + SPM + RS + DMG;
-
+                                        Weapons.Add(new Knife(Model, BlastRad, ShPeMi, ReSp, D, SorRorP));
                                         break;
                                     case 1: //меч T += W + SZ + M + BR + SPM + RS + DMG;
+                                        try
+                                        {
+                                            double strch = double.Parse(inputdata[7]);
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("Неверный формат данных!!!");
+                                            return;
+                                        }
 
+                                        AorBSorWorCNTRorCS = double.Parse(inputdata[7]);
+                                        Weapons.Add(new Sword(Model, BlastRad, ShPeMi, ReSp, D, SorRorP,AorBSorWorCNTRorCS));
                                         break;
                                     case 2: //топор T += SZ + M + BR + SPM + RS + DMG;
-
+                                        Weapons.Add(new BattleAxe(Model, BlastRad, ShPeMi, ReSp, D, SorRorP));
                                         break;
                                 }
                                 break;
@@ -476,47 +575,145 @@ namespace Weapons
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //дубинка T += SZ + M + BR + SPM + RS + DMG;
-
+                                        Weapons.Add(new Baton(Model, BlastRad, ShPeMi, ReSp, D, SorRorP));
                                         break;
                                     case 1: //камень T += C + SZ + M + BR + SPM + RS + DMG;
+                                        try
+                                        {
+                                            string strch = inputdata[7];
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("Неверный формат данных!!!");
+                                            return;
+                                        }
 
+                                        CNTR = inputdata[7];
+                                        Weapons.Add(new Rock(Model, BlastRad, ShPeMi, ReSp, D, SorRorP, CNTR));
                                         break;
                                 }
                                 break;
                         }
                         break;
                     case 1: //огнестрельное
+                        try
+                        {
+                            double strch = double.Parse(inputdata[6]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Неверный формат данных!!!");
+                            return;
+                        }
+
+                        SorRorP = double.Parse(inputdata[6]);
                         switch (CB_2.SelectedIndex)
                         {
                             case 0: //пистолет T += R + M + BR + SPM + RS + MAG + DMG;
-
+                                Weapons.Add(new Pistol(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP));
                                 break;
                             case 1: //винтовка
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //штурмовая T += R + M + BR + SPM + RS + MAG + DMG;
-
+                                        Weapons.Add(new Assault(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP));
                                         break;
                                     case 1: //снайперская T += CS + R + M + BR + SPM + RS + MAG + DMG;
+                                        try
+                                        {
+                                            double strch = int.Parse(inputdata[7]);
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("Неверный формат данных!!!");
+                                            return;
+                                        }
 
+                                        CS = int.Parse(inputdata[7]);
+                                        Weapons.Add(new Sniper(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP, CS));
                                         break;
                                 }
                                 break;
                             case 2: //дробовик T += R + M + BR + SPM + RS + MAG + DMG;
-
+                                Weapons.Add(new ShotGun(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP));
                                 break;
                             case 3: //пулемёт T += R + M + BR + SPM + RS + MAG + DMG;
-
+                                Weapons.Add(new MachineGun(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP));
                                 break;
                             case 4: //пп T += R + M + BR + SPM + RS + MAG + DMG;
-
+                                Weapons.Add(new SubMachine(Model, BlastRad, ShPeMi, ReSp, MAG, D, SorRorP));
                                 break;
                         }
                         break;
                     case 2: //ядерное - ракета T += P + M + BR + SPM + RS + DMG;
+                        try
+                        {
+                            double strch = double.Parse(inputdata[6]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Неверный формат данных!!!");
+                            return;
+                        }
 
+                        SorRorP = double.Parse(inputdata[6]);
+                        Weapons.Add(new Rocket(Model, BlastRad, ShPeMi, ReSp, D, SorRorP));
                         break;
                 }
+                CB_CH1.IsEnabled = true;
+                CB_CH2.IsEnabled = true;
+                CB_CH1.Items.Add((number + 1).ToString());
+                CB_CH2.Items.Add((number + 1).ToString());
+                number++;
+                DG_OUT.ItemsSource = Weapons;
+                DG_OUT.Items.Refresh();
+                TB_One.Text = "Успешно!";
+                TB_One.IsReadOnly = true;
+                B_Add.Content = "Добавить";
+                TB_Remember.Text = "";
+                check = 0;
+            }
+        }
+
+        private void TB_One_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (check == 1)
+            {
+                TB_One.IsReadOnly = false;
+                TB_One.Text = "";
+            }
+        }
+
+        private void B_INFO_Click(object sender, RoutedEventArgs e)
+        {
+            if (CB_CH1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите оружие!");
+                return;
+            }
+
+            TB_One.Text = Weapons[CB_CH1.SelectedIndex].ToString();
+        }
+
+        private void B_EQUALS_Click(object sender, RoutedEventArgs e)
+        {
+            if (CB_CH1.SelectedIndex == -1 || CB_CH2.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите оружие!");
+                return;
+            }
+
+            if (Weapons[CB_CH1.SelectedIndex].Equals(Weapons[CB_CH2.SelectedIndex]))
+            {
+                TB_One.Text = "Это две абсолютно одинаковые единицы оружия!";
+            }
+            else if (Weapons[CB_CH1.SelectedIndex].ParaEquals(Weapons[CB_CH2.SelectedIndex]))
+            {
+                TB_One.Text = "Эти две единицы оружия равны по характеристикам, но не по названию модели... Как такое может быть?";
+            }
+            else
+            {
+                TB_One.Text = "Это две совершенно разные единицы оружия!";
             }
         }
     }
