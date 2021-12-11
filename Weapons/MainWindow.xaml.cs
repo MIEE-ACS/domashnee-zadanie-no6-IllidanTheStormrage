@@ -792,8 +792,8 @@ namespace Weapons
             CB_CH2.Items.Clear();
             CB_CH2.IsEnabled = false;
             Weapons.Clear();
-            DG_OUT.Items.Clear();
-
+            //DG_OUT.Items.Clear();
+            DG_OUT.Items.Refresh();
             return;
         }
     }
