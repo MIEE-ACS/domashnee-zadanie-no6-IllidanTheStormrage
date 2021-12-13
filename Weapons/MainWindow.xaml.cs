@@ -535,6 +535,10 @@ namespace Weapons
             {
                 //Array.Resize(ref Weapons, number + 1);
 
+                CB_1.IsEnabled = false;
+                CB_2.IsEnabled = false;
+                CB_3.IsEnabled = false;
+
                 string[] separatingStrings = {" ", ";", "; "};
 
                 try
@@ -727,6 +731,12 @@ namespace Weapons
                 Weapons[number].Check();
                 CB_CH1.IsEnabled = true;
                 CB_CH2.IsEnabled = true;
+                CB_1.SelectedIndex = -1;
+                CB_2.SelectedIndex = -1;
+                CB_3.SelectedIndex = -1;
+                CB_1.IsEnabled = true;
+                CB_2.IsEnabled = false;
+                CB_3.IsEnabled = false;
                 CB_CH1.Items.Add((number + 1).ToString());
                 CB_CH2.Items.Add((number + 1).ToString());
                 number++;
@@ -794,6 +804,8 @@ namespace Weapons
             Weapons.Clear();
             //DG_OUT.Items.Clear();
             DG_OUT.Items.Refresh();
+            number = 0;
+            TB_One.Text = "База удалена!";
             return;
         }
     }
