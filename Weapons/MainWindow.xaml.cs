@@ -149,6 +149,11 @@ namespace Weapons
             : base (N, BR, SPM, RS, 1, D, S)
         {
         }
+
+        public override string ToString()
+        {
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, возможность нанесения до " + ShotsPerMinute + " ударов в минуту, скорость восстановления после удара " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона и размер " + Size + " метров.";
+        }
     }
 
     public class Knife : Cutting //нож
@@ -170,7 +175,7 @@ namespace Weapons
 
         public override string ToString()
         {
-            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и вес " + Weight + " килограммов.";
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, возможность нанесения до " + ShotsPerMinute + " ударов в минуту, скорость восстановления после удара " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и вес " + Weight + " килограммов.";
         }
     }
 
@@ -209,7 +214,7 @@ namespace Weapons
 
         public override string ToString()
         {
-            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, скорострельность " + ShotsPerMinute + " выстрелов в минуту, скорость перезарядки " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и страну происхождения " + Country + ".";
+            return "Модель " + Model + " имеет радиус поражения " + BlastRadius + " метров, возможность нанесения до " + ShotsPerMinute + " ударов в минуту, скорость восстановления после удара " + RechargeSpeed + " минут, средний урон " + Damage + " единиц урона, размер " + Size + " метров и страну происхождения " + Country + ".";
         }
     }
 
@@ -368,6 +373,30 @@ namespace Weapons
             CB_3.IsEnabled = false;
 
             B_Add.Content = "Ввести характеристики";
+
+            /////////////////////////////
+            
+            CB_CH1.IsEnabled = true;
+            CB_CH2.IsEnabled = true;
+            number = 5;
+
+            Weapons.Add(new Sword("Фростморн", 2, 3, 0.3, 9999, 2.5, 100));
+            CB_CH1.Items.Add("1");
+
+            Weapons.Add(new Sword("Грейсвандир", 1.2, 10, 0.1, 100, 1.5, 5));
+            CB_CH1.Items.Add("2");
+
+            Weapons.Add(new Assault("АК-47", 3000, 100, 0.03, 100, 33, 30));
+            CB_CH1.Items.Add("3");
+
+            Weapons.Add(new Rock("Камень я не дам", 1, 1, 1000, 1, 0.1, "Проклятые земли"));
+            CB_CH1.Items.Add("4");
+
+            Weapons.Add(new Rocket("Тополь-М", 10000, 0.1, 1440, 1000000, 10000));
+            CB_CH1.Items.Add("5");
+
+            DG_OUT.ItemsSource = Weapons;
+            DG_OUT.Items.Refresh();
         }
 
         private void CB_1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -375,8 +404,7 @@ namespace Weapons
             CB_2.IsEnabled = true;
             switch (CB_1.SelectedIndex)
             {
-                case 0:
-                    
+                case 0:       
                     CB_2.ItemsSource = ColdWeaponType;
                     break;
                 case 1:
@@ -463,14 +491,13 @@ namespace Weapons
                                 switch (CB_3.SelectedIndex)
                                 {
                                     case 0: //нож
+                                    case 2: //топор
                                         T += M + BR + SPM + RS + MAGDM + DMG + SZ;
                                         break;
                                     case 1: //меч
                                         T += M + BR + SPM + RS + MAGDM + DMG + SZ + W;
                                         break;
-                                    case 2: //топор
-                                        T += M + BR + SPM + RS + MAGDM + DMG + SZ;
-                                        break;
+
                                 }
                                 break;
                             case 2: //дробящее
@@ -510,11 +537,7 @@ namespace Weapons
                                 }
                                 break;
                             case 2: //дробовик
-                                T += M + BR + SPM + RS + MAG + DMG + R;
-                                break;
                             case 3: //пулемёт
-                                T += M + BR + SPM + RS + MAG + DMG + R;
-                                break;
                             case 4: //пп
                                 T += M + BR + SPM + RS + MAG + DMG + R;
                                 break;
@@ -582,7 +605,7 @@ namespace Weapons
                         }
                         catch
                         {
-                            MessageBox.Show("Неверный формат данных!!!");
+                            MessageBox.Show("Неверный формат данных!!! Повторите ввод!");
                             return;
                         }
 
@@ -596,7 +619,7 @@ namespace Weapons
                                 }
                                 catch
                                 {
-                                    MessageBox.Show("Неверный формат данных!!!");
+                                    MessageBox.Show("Неверный формат данных!!! Повторите ввод!");
                                     return;
                                 }
 
@@ -627,7 +650,7 @@ namespace Weapons
                                         }
                                         catch
                                         {
-                                            MessageBox.Show("Неверный формат данных!!!");
+                                            MessageBox.Show("Неверный формат данных!!! Повторите ввод!");
                                             return;
                                         }
 
@@ -652,7 +675,7 @@ namespace Weapons
                                         }
                                         catch
                                         {
-                                            MessageBox.Show("Неверный формат данных!!!");
+                                            MessageBox.Show("Неверный формат данных!!! Повторите ввод!");
                                             return;
                                         }
 
@@ -670,7 +693,7 @@ namespace Weapons
                         }
                         catch
                         {
-                            MessageBox.Show("Неверный формат данных!!!");
+                            MessageBox.Show("Неверный формат данных!!! Повторите ввод!");
                             return;
                         }
 
@@ -740,7 +763,6 @@ namespace Weapons
                 CB_CH1.Items.Add((number + 1).ToString());
                 CB_CH2.Items.Add((number + 1).ToString());
                 number++;
-                DG_OUT.ItemsSource = Weapons;
                 DG_OUT.Items.Refresh();
                 TB_One.Text = "Успешно!";
                 TB_One.IsReadOnly = true;
@@ -769,6 +791,7 @@ namespace Weapons
                 return;
             }
             TB_One.Text = Weapons[CB_CH1.SelectedIndex].ToString();
+
             return;
         }
 
@@ -792,6 +815,7 @@ namespace Weapons
             {
                 TB_One.Text = "Это две совершенно разные единицы оружия!";
             }
+
             return;
         }
 

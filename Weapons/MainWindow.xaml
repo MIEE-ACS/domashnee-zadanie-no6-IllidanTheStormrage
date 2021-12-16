@@ -34,7 +34,16 @@
         <ComboBox x:Name="CB_3" Margin="6,9,5,12" Grid.Column="3" Grid.Row="1" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center" Grid.ColumnSpan="2"/>
         <Button x:Name="B_Add" Content="Кнопка" Margin="10,9,13,12" Click="B_Add_Click" Grid.Column="5" Grid.Row="1" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center" Grid.ColumnSpan="2"/>
         <TextBox x:Name="TB_One" Margin="10,9,13,2" TextWrapping="Wrap" Text="Ввод и вывод информации осуществляется здесь." GotFocus="TB_One_GotFocus" Grid.ColumnSpan="7" Grid.Row="2" IsReadOnly="True"/>
-        <DataGrid x:Name="DG_OUT" Margin="10,9,10,10" Grid.Column="7" Grid.RowSpan="5" Grid.Row="1" IsReadOnly="True"/>
+        <DataGrid x:Name="DG_OUT" Margin="10,9,10,10" Grid.Column="7" Grid.RowSpan="5" Grid.Row="1" IsReadOnly="True" ItemsSource="{Binding list}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+                <DataGridTextColumn Header="Радиус поражения" Binding="{Binding BlastRadius}"/>
+                <DataGridTextColumn Header="Скоростельность" Binding="{Binding ShotsPerMinute}"/>
+                <DataGridTextColumn Header="Перезарядка" Binding="{Binding RechargeSpeed}"/>
+                <DataGridTextColumn Header="Магазин" Binding="{Binding Magazine}"/>
+                <DataGridTextColumn Header="Урон" Binding="{Binding Damage}"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <TextBlock x:Name="TB_Remember" Margin="10,3,13,4" TextWrapping="Wrap" Grid.Row="3" Grid.ColumnSpan="7"/>
         <Label Content="Комната самого тихого в группе" Grid.ColumnSpan="8" Margin="10,10,10,10" FontSize="20" FontWeight="Bold" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center"/>
         <Label Content="Оружие №:" Margin="3,10,3,12" Grid.Row="4" HorizontalContentAlignment ="Center" VerticalContentAlignment ="Center"/>
