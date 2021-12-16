@@ -763,6 +763,7 @@ namespace Weapons
                 CB_CH1.Items.Add((number + 1).ToString());
                 CB_CH2.Items.Add((number + 1).ToString());
                 number++;
+                DG_OUT.ItemsSource = Weapons;
                 DG_OUT.Items.Refresh();
                 TB_One.Text = "Успешно!";
                 TB_One.IsReadOnly = true;
